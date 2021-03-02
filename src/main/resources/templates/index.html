@@ -26,7 +26,7 @@
       <p>計算の基準となる日付を入力してください</p>
       <div class="form">
         <form th:action="@{/}" method="post" id="form">
-          <input type="text" name="dateFormula">
+          <input type="text" name="referenceDate">
         </form>
         <button type="submit" form="form">計算実行</button>
       </div>
@@ -35,24 +35,26 @@
     </div>
   </div>
 
-  <table>
-    <tr>
-      <th>No.</th>
-      <th>日付ID</th>
-      <th>日付名</th>
-      <th>計算結果</th>
-      <th>計算式(年月日)</th>
-      <th>編集</th>
-    </tr>
-    <tr th:each="formula : ${dateFormulas}">
-      <td th:text="${formula.id}"></td>
-      <td th:text="${formula.dateId}"></td>
-      <td th:text="${formula.name}"></td>
-      <td th:text="${formula.yearModeration}"></td>
-      <td th:text="${formula.monthModeration}"></td>
-      <td th:text="${formula.dayModeration}"></td>
-    </tr>
-  </table>
+  <div th:if="${result}">
+	  <table th:object="${result}">
+	    <tr>
+	      <th>No.</th>
+	      <th>日付ID</th>
+	      <th>日付名</th>
+	      <!-- <th>計算結果</th> -->
+	      <th>計算式(年月日)</th>
+	      <!-- <th>編集</th> -->
+	    </tr>
+	    <tr th:each="date, st : *{dateFormula}">
+	      <td th:text="*{dateFormula[__${st.index}__].id}"></td>
+	      <td th:text="*{dateFormula[__${st.index}__].dateId}"></td>
+	      <td th:text="*{dateFormula[__${st.index}__].name}"></td>
+	      <!-- <td th:text="${formula.yearModeration}"></td> -->
+	      <td th:text="${referenceDate}"></td>
+	      <!-- <td th:text="${formula.dayModeration}"></td> -->
+	    </tr>
+	  </table>
+  </div>
 
 </body>
 
