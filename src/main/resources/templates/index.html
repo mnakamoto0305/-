@@ -41,18 +41,19 @@
 	      <th>No.</th>
 	      <th>日付ID</th>
 	      <th>日付名</th>
-	      <!-- <th>計算結果</th> -->
+	      <th>計算結果</th>
 	      <th>計算式(年月日)</th>
 	      <!-- <th>編集</th> -->
 	    </tr>
-	    <tr th:each="date, st : *{dateFormula}">
-	      <td th:text="*{dateFormula[__${st.index}__].id}"></td>
-	      <td th:text="*{dateFormula[__${st.index}__].dateId}"></td>
-	      <td th:text="*{dateFormula[__${st.index}__].name}"></td>
-	      <!-- <td th:text="${formula.yearModeration}"></td> -->
-	      <td th:text="${referenceDate}"></td>
-	      <!-- <td th:text="${formula.dayModeration}"></td> -->
-	    </tr>
+
+		    <tr th:each="date, st : *{dateFormula}">
+		      <td th:text="*{dateFormula[__${st.index}__].id}"></td>
+		      <td th:text="*{dateFormula[__${st.index}__].dateId}"></td>
+		      <td th:text="*{dateFormula[__${st.index}__].name}"></td>
+			    <td th:text="*{dateFormula[__${st.index}__].calculationResult}"></td>
+		      <td th:text="|*{dateFormula[__${st.index}__].yearModeration}/*{dateFormula[__${st.index}__].monthModeration}/*{dateFormula[__${st.index}__].dayModeration}|"></td>
+		      <!-- <td th:text="${formula.dayModeration}"></td> -->
+		    </tr>
 	  </table>
   </div>
 

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.sample.springboot.Service.CalculationService;
+import com.sample.springboot.Service.MainService;
 import com.sample.springboot.domain.DateFormula;
 import com.sample.springboot.domain.Result;
 import com.sample.springboot.domain.SimulationForm;
@@ -21,6 +22,9 @@ public class CalculationController {
 
 	@Autowired
 	CalculationService calculationService;
+
+	@Autowired
+	MainService mainService;
 
 	@Autowired
 	SimulationForm simulationForm;
@@ -52,8 +56,12 @@ public class CalculationController {
 
 		//計算式の取得
 		result.setDateFormula(calculationService.findFormula());
-		//仮り置き
-		result.setCalculationResult(ldate);
+
+		//年の加減実行
+		for (DateFormula df : result.getDateFormula()) {
+			LocalDate result = mainService.moderationYear(ldate, df.getYearModeration());
+			df.setCalculationResult(result);
+		}
 
 		mav.addObject("result", result);
 
