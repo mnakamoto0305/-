@@ -1,18 +1,20 @@
 package com.sample.springboot.Controller;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.sample.springboot.Service.CrudService;
 import com.sample.springboot.Service.CalculationService;
-import com.sample.springboot.Service.MainService;
 import com.sample.springboot.domain.DateFormula;
 import com.sample.springboot.domain.Result;
 import com.sample.springboot.domain.SimulationForm;
@@ -21,26 +23,23 @@ import com.sample.springboot.domain.SimulationForm;
 public class CalculationController {
 
 	@Autowired
-	CalculationService calculationService;
+	CrudService crudService;
 
 	@Autowired
-	MainService mainService;
+	CalculationService calculationService;
 
 	@Autowired
 	SimulationForm simulationForm;
 
-	@Autowired
-	Result result;
-
 	@GetMapping("/")
-	public ModelAndView getIndex(ModelAndView mav) {
+	public ModelAndView getIndex(@ModelAttribute SimulationForm simulationForm ,ModelAndView mav) {
 		mav.setViewName("index");
 		return mav;
 	}
 
 	@GetMapping("/result")
 	public ModelAndView getResult(ModelAndView mav) {
-		List<DateFormula> list = calculationService.findFormula();
+		List<DateFormula> list = crudService.findFormula();
 		mav.addObject("dateFormulas", list);
 
 		mav.setViewName("index");
@@ -48,26 +47,29 @@ public class CalculationController {
 	}
 
 	@PostMapping("/")
-	public ModelAndView postResult(@RequestParam("referenceDate")String str , ModelAndView mav) {
+	public ModelAndView postResult(@ModelAttribute Result result, @ModelAttribute @Validated SimulationForm simulationForm,BindingResult bindingResult ,@RequestParam("referenceDate")String str , ModelAndView mav) {
 		//基準日付の取得
-		DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-		LocalDate ldate = simulationForm.getReferenceDate();
-		ldate = LocalDate.parse(str, fmt);
+//		DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+//		LocalDate ldate = simulationForm.getReferenceDate();
+//		ldate = LocalDate.parse(simulationForm.getReferenceDate(), fmt);
 
-		//計算式の取得
-		result.setDateFormula(calculationService.findFormula());
+		if (!bindingResult.hasErrors()) {
+			//計算式の取得
+			result.setDateFormula(crudService.findFormula());
 
-		//年の加減実行
-		for (DateFormula df : result.getDateFormula()) {
-			LocalDate result = mainService.moderationYear(ldate, df.getYearModeration());
-			df.setCalculationResult(result);
+			//計算実行
+			for (DateFormula df : result.getDateFormula()) {
+				LocalDate resultDate = calculationService.moderation(simulationForm.getReferenceDate(), df.getYearModeration(), df.getMonthModeration(), df.getDayModeration());
+				df.setCalculationResult(resultDate);
+			}
+
+			//addobject
+			mav.addObject("result", result);
+
+			mav.setViewName("index");
+		} else {
+			mav.setViewName("index");
 		}
-
-		mav.addObject("result", result);
-
-		mav.addObject("referenceDate", ldate);
-
-		mav.setViewName("index");
 
 		return mav;
 	}

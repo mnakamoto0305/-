@@ -7,8 +7,11 @@ import org.apache.ibatis.annotations.Mapper;
 import com.sample.springboot.domain.DateFormula;
 
 @Mapper
-public interface CalculationMapper {
+public interface CrudMapper {
 
 	//計算式検索メソッド
 	public List<DateFormula> findFormula();
+
+	//計算式登録メソッド
+	public Boolean registerFormula();
 }

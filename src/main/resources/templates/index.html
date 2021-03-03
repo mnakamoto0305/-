@@ -1,61 +1,73 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <head>
-	<meta charset="UTF-8">
+<meta charset="UTF-8">
+<title>日付計算アプリ</title>
 
-	<!-- bootstrapの設定 -->
-	<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}"
-		rel="stylesheet"></link>
-	<script th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
-	<script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+<!-- bootstrapの設定 -->
+<link th:href="@{/webjars/bootstrap/4.4.1-1/css/bootstrap.min.css}"
+	rel="stylesheet"></link>
+<script th:src="@{/webjars/jquery/3.5.0/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.4.1-1/js/bootstrap.min.js}"></script>
 
-	<!-- cssの設定 -->
-	<link th:href="@{/css/style.css}" rel="stylesheet">
+<!-- cssの設定 -->
+<link th:href="@{/css/style.css}" href="../static/css/styles.css"
+	rel="stylesheet" type="text/css">
 
-	<title>日付計算アプリ</title>
 </head>
 
 <header>
-  <a th:href="@{'/'}">日付計算アプリ</a>
+	<div class="title">
+		<a th:href="@{'/'}">日付計算アプリ</a>
+	</div>
 </header>
 
 <body>
-  <div class="main">
-    <div class="container">
-      <p>計算の基準となる日付を入力してください</p>
-      <div class="form">
-        <form th:action="@{/}" method="post" id="form">
-          <input type="text" name="referenceDate">
-        </form>
-        <button type="submit" form="form">計算実行</button>
-      </div>
-      <a th:href="@{'/'}">新規登録</a>
-      <a th:href="@{'/result'}">計算式表示</a>
-    </div>
-  </div>
+	<div class="container">
+		<div class="main">
+			<form th:action="@{/}" method="post" id="referenceDate"
+				th:object="${simulationForm}">
+				<div class="form-group">
+					<label>計算の基準となる日付を入力してください。</label>
+					<div
+						th:classappend="${#fields.hasErrors('referenceDate')}?'has-error'">
+						<input type="text" name="referenceDate"
+							th:field="*{referenceDate}" class="form-control"
+							placeholder="例:2020/01/01"> <span class="text-danger"
+							th:if="${#fields.hasErrors('referenceDate')}"
+							th:errors="*{referenceDate}"></span>
+					</div>
+				</div>
+			</form>
+		  <button type="submit" class="btn btn-primary" form="referenceDate">計算実行</button>
+			<a th:href="@{'/'}" class="btn btn-primary">新規登録</a>
+		</div>
+	</div>
 
-  <div th:if="${result}">
-	  <table th:object="${result}">
-	    <tr>
-	      <th>No.</th>
-	      <th>日付ID</th>
-	      <th>日付名</th>
-	      <th>計算結果</th>
-	      <th>計算式(年月日)</th>
-	      <!-- <th>編集</th> -->
-	    </tr>
+	<div th:if="${result}" class="container">
+		<table th:object="${result}" class="table">
+			<tr>
+				<th scope="col">No.</th>
+				<th scope="col">日付ID</th>
+				<th scope="col">日付名</th>
+				<th scope="col">計算結果</th>
+				<th scope="col">計算式(年月日)</th>
+				<!-- <th>編集</th> -->
+			</tr>
 
-		    <tr th:each="date, st : *{dateFormula}">
-		      <td th:text="*{dateFormula[__${st.index}__].id}"></td>
-		      <td th:text="*{dateFormula[__${st.index}__].dateId}"></td>
-		      <td th:text="*{dateFormula[__${st.index}__].name}"></td>
-			    <td th:text="*{dateFormula[__${st.index}__].calculationResult}"></td>
-		      <td th:text="|*{dateFormula[__${st.index}__].yearModeration}/*{dateFormula[__${st.index}__].monthModeration}/*{dateFormula[__${st.index}__].dayModeration}|"></td>
-		      <!-- <td th:text="${formula.dayModeration}"></td> -->
-		    </tr>
-	  </table>
-  </div>
+			<tr th:each="date, st : *{dateFormula}">
+				<td th:text="*{dateFormula[__${st.index}__].id}"></td>
+				<td th:text="*{dateFormula[__${st.index}__].dateId}"></td>
+				<td th:text="*{dateFormula[__${st.index}__].name}"></td>
+				<td th:text="*{dateFormula[__${st.index}__].calculationResult}"></td>
+				<td
+					th:text="|*{dateFormula[__${st.index}__].yearModeration}/*{dateFormula[__${st.index}__].monthModeration}/*{dateFormula[__${st.index}__].dayModeration}|"></td>
+				<!-- <td th:text="${formula.dayModeration}"></td> -->
+			</tr>
+		</table>
+	</div>
 
 </body>
 

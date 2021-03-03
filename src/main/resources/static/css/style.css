@@ -1,1 +1,27 @@
-@charset "UTF-8";
+header {
+	background-color: skyblue;
+	height: 100px;
+	position: relative;
+}
+
+.title a{
+	display: inline-block;
+	color: white;
+	position: absolute;
+	top: 25%;
+	left: 25px;
+	font-size: 32px;
+}
+
+.title p{
+	padding: 0, 25px;
+}
+
+.main {
+	margin-top: 50px;
+	background-color: #e6f0f0;
+}
+
+.main p {
+
+}
