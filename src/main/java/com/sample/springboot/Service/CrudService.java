@@ -13,12 +13,18 @@ import com.sample.springboot.mybatis.CrudMapper;
 public class CrudService {
 
 	@Autowired
-	CrudMapper calculationMapper;
+	CrudMapper crudMapper;
 
 	//計算式検索用メソッド
 	@Transactional
 	public List<DateFormula> findFormula() {
-		return calculationMapper.findFormula();
+		return crudMapper.findFormula();
+	}
+
+	//計算式登録用メソッド
+	@Transactional
+	public boolean registerFormula(DateFormula dateFormula) {
+		return crudMapper.registerFormula(dateFormula);
 	}
 
 }

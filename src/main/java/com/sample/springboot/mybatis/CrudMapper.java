@@ -13,5 +13,5 @@ public interface CrudMapper {
 	public List<DateFormula> findFormula();
 
 	//計算式登録メソッド
-	public Boolean registerFormula();
+	public Boolean registerFormula(DateFormula dateformula);
 }

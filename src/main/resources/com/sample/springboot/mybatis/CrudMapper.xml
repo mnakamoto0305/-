@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.sample.springboot.mybatis.CalculationMapper">
+<mapper namespace="com.sample.springboot.mybatis.CrudMapper">
 
 <!-- マッピング定義 -->
 <resultMap type="com.sample.springboot.domain.DateFormula" id="dateFormula">
@@ -13,7 +13,7 @@
   <result column="day_moderation" property="dayModeration" />
 </resultMap>
 
-  <!-- 全件検索 -->
+  <!-- 計算式検索 -->
   <select id="findFormula" resultMap="dateFormula">
     SELECT
     id,
@@ -27,6 +27,25 @@
     ORDER BY
     id
   </select>
+
+
+  <!-- 計算式登録 -->
+  <insert id="registerFormula" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO date_formulas (
+      date_id,
+      name,
+      year_moderation,
+      month_moderation,
+      day_moderation
+    )
+    VALUES (
+      #{dateId},
+      #{name},
+      #{yearModeration},
+      #{monthModeration},
+      #{dayModeration}
+    )
+  </insert>
 
 </mapper>
 

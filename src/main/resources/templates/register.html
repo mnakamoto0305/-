@@ -28,7 +28,7 @@
   <div class="container">
     <h1>計算式 新規登録</h1>
     <form th:action="@{/register/confirm}" method="post" id="registerForm"
-        th:object="${dasteFormula}">
+        th:object="${dateFormula}">
         <div class="form-group">
           <label>日付ID</label>
           <input type="text" class="form-control" th:field="*{dateId}">
