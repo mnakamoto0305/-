@@ -20,4 +20,7 @@ public interface CrudMapper {
 
 	//計算式特定メソッド(更新・削除用)
 	public DateFormula identifyFormula(Long id);
+
+	//計算式削除メソッド
+	public Boolean deleteFormula(Long id);
 }

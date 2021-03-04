@@ -39,4 +39,10 @@ public class CrudService {
 		return crudMapper.updateFormula(dateFormula);
 	}
 
+	//計算式削除用メソッド
+	@Transactional
+	public boolean deleteFormula(Long id) {
+		return crudMapper.deleteFormula(id);
+	}
+
 }

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+<meta charset="UTF-8">
+<title>削除</title>
+
+<!-- bootstrapの設定 -->
+<link th:href="@{/webjars/bootstrap/4.4.1-1/css/bootstrap.min.css}"
+  rel="stylesheet"></link>
+<script th:src="@{/webjars/jquery/3.5.0/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.4.1-1/js/bootstrap.min.js}"></script>
+
+<!-- cssの設定 -->
+<link th:href="@{/css/style.css}" href="../static/css/styles.css"
+  rel="stylesheet" type="text/css">
+</head>
+
+<header>
+  <div class="title">
+    <a th:href="@{'/'}">日付計算アプリ</a>
+  </div>
+</header>
+
+<body>
+
+  <div class="container">
+    <h1>こちらの内容を削除してよろしいですか？</h1>
+    <form th:action="@{/delete/{id}(id=*{id})}" th:method="delete" id="deleteConfirm" th:object="${dateFormula}">
+      <input type="hidden" th:value="*{id}">
+      <table class="table">
+        <tr>
+          <th class="row">日付ID</th>
+          <td th:text="*{dateId}"></td>
+        </tr>
+        <tr>
+          <th class="row">日付名</th>
+          <td th:text="*{name}"></td>
+        </tr>
+        <tr>
+          <th class="row">加減算値(年)</th>
+          <td th:text="*{yearModeration}"></td>
+        </tr>
+        <tr>
+          <th class="row">加減算値(月)</th>
+          <td th:text="*{monthModeration}"></td>
+        </tr>
+        <tr>
+          <th class="row">加減算値(日)</th>
+          <td th:text="*{dayModeration}"></td>
+        </tr>
+      </table>
+    </form>
+    <button type="submit" class="btn btn-danger" form="deleteConfirm">削除</button>
+    <a th:href="@{'/'}" class="btn btn-primary">戻る</a>
+  </div>
+
+</body>
+
+</html>

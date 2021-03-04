@@ -76,5 +76,11 @@
     id = #{id}
   </select>
 
+
+  <!-- 計算式削除 -->
+  <delete id="deleteFormula">
+    DELETE FROM date_formulas WHERE id = #{id}
+  </delete>
+
 </mapper>
 
