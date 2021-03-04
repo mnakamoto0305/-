@@ -36,4 +36,6 @@ public class DeleteController {
 		crudService.deleteFormula(id);
 		return new ModelAndView("redirect:/");
 	}
+
+
 }
