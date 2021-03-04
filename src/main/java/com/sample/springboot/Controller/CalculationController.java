@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.sample.springboot.Service.CrudService;
 import com.sample.springboot.Service.CalculationService;
+import com.sample.springboot.Service.CrudService;
 import com.sample.springboot.domain.DateFormula;
 import com.sample.springboot.domain.Result;
 import com.sample.springboot.domain.SimulationForm;
@@ -48,10 +48,6 @@ public class CalculationController {
 
 	@PostMapping("/")
 	public ModelAndView postResult(@ModelAttribute Result result, @ModelAttribute @Validated SimulationForm simulationForm,BindingResult bindingResult ,@RequestParam("referenceDate")String str , ModelAndView mav) {
-		//基準日付の取得
-//		DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-//		LocalDate ldate = simulationForm.getReferenceDate();
-//		ldate = LocalDate.parse(simulationForm.getReferenceDate(), fmt);
 
 		if (!bindingResult.hasErrors()) {
 			//計算式の取得

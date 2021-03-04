@@ -2,17 +2,30 @@ package com.sample.springboot.domain;
 
 import java.time.LocalDate;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 import lombok.Data;
 
 @Data
 public class DateFormula {
 
 	private int id;
+
+	@NotBlank
 	private String dateId;
+
+	@NotBlank
 	private String name;
-	private int yearModeration;
-	private int monthModeration;
-	private int dayModeration;
+
+	@NotNull
+	private Integer yearModeration;
+
+	@NotNull
+	private Integer monthModeration;
+
+	@NotNull
+	private Integer dayModeration;
 	private LocalDate calculationResult;
 
 }

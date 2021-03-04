@@ -4,6 +4,8 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,9 +40,15 @@ public class RegisterController {
 
 
 	@PostMapping("/register/confirm")
-	public ModelAndView postRegisterConfirm(@ModelAttribute DateFormula dateFormula , ModelAndView mav) {
-		session.setAttribute("regFormula", dateFormula);
-		mav.setViewName("registerConfirm");
+	public ModelAndView postRegisterConfirm(@ModelAttribute @Validated DateFormula dateFormula, BindingResult bindingResult, ModelAndView mav) {
+
+		if(!bindingResult.hasErrors()) {
+			session.setAttribute("regFormula", dateFormula);
+			mav.setViewName("registerConfirm");
+		} else {
+			mav.setViewName("register");
+		}
+
 		return mav;
 	}
 

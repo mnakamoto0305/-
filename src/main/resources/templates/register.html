@@ -31,23 +31,43 @@
         th:object="${dateFormula}">
         <div class="form-group">
           <label>日付ID</label>
-          <input type="text" class="form-control" th:field="*{dateId}">
+          <div
+            th:classappend="${#fields.hasErrors('dateId')}?'has-error'">
+            <input type="text" class="form-control" th:field="*{dateId}" placeholder="Y3">
+            <span class="text-danger" th:if="${#fields.hasErrors('dateId')}" th:errors="*{dateId}"></span>
+          </div>
         </div>
         <div class="form-group">
           <label>日付名</label>
-          <input type="text" class="form-control" th:field="*{name}">
+          <div
+            th:classappend="${#fields.hasErrors('name')}?'has-error'">
+            <input type="text" class="form-control" th:field="*{name}" placeholder="3年後">
+            <span class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+          </div>
         </div>
         <div class="form-group">
-          <label>加減値(年)</label>
-          <input type="text" class="form-control" th:field="*{yearModeration}">
+          <label>加減算値(年)</label>
+          <div
+            th:classappend="${#fields.hasErrors('yearModeration')}?'has-error'">
+            <input type="text" class="form-control" th:field="*{yearModeration}" placeholder="3">
+            <span class="text-danger" th:if="${#fields.hasErrors('yearModeration')}" th:errors="*{yearModeration}"></span>
+          </div>
         </div>
         <div class="form-group">
-          <label>加減値(月)</label>
-          <input type="text" class="form-control" th:field="*{monthModeration}">
+          <label>加減算値(月)</label>
+          <div
+            th:classappend="${#fields.hasErrors('monthModeration')}?'has-error'">
+            <input type="text" class="form-control" th:field="*{monthModeration}" placeholder="0">
+            <span class="text-danger" th:if="${#fields.hasErrors('monthModeration')}" th:errors="*{monthModeration}"></span>
+          </div>
         </div>
         <div class="form-group">
-          <label>加減値(日)</label>
-          <input type="text" class="form-control" th:field="*{dayModeration}">
+          <label>加減算値(日)</label>
+          <div
+            th:classappend="${#fields.hasErrors('dayModeration')}?'has-error'">
+            <input type="text" class="form-control" th:field="*{dayModeration}" placeholder="0">
+            <span class="text-danger" th:if="${#fields.hasErrors('dayModeration')}" th:errors="*{dayModeration}"></span>
+          </div>
         </div>
     </form>
     <button type="submit" class="btn btn-primary" form="registerForm">確認</button>
