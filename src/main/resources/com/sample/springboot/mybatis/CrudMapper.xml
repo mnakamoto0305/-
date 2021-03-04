@@ -47,5 +47,34 @@
     )
   </insert>
 
+
+  <!-- 計算式更新 -->
+  <update id="updateFormula">
+    UPDATE date_formulas
+      SET
+      date_id = #{dateId},
+      name = #{name},
+      year_moderation = #{yearModeration},
+      month_moderation = #{monthModeration},
+      day_moderation = #{dayModeration}
+     WHERE id = #{id}
+  </update>
+
+
+  <!-- 計算式特定(更新・削除用) -->
+  <select id="identifyFormula" resultMap="dateFormula">
+    SELECT
+    id,
+    date_Id,
+    name,
+    year_moderation,
+    month_moderation,
+    day_moderation
+    FROM
+    date_formulas
+    WHERE
+    id = #{id}
+  </select>
+
 </mapper>
 
