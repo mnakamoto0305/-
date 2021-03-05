@@ -47,14 +47,14 @@
 	</div>
 
 	<div th:if="${result}" class="container">
-		<table th:object="${result}" class="table">
+		<table th:object="${result}" class="table table-hover">
 			<tr>
 				<th scope="col">No.</th>
 				<th scope="col">日付ID</th>
 				<th scope="col">日付名</th>
 				<th scope="col">計算結果</th>
 				<th scope="col">計算式(年月日)</th>
-				<!-- <th>編集</th> -->
+				<th>編集</th>
 			</tr>
 
 			<tr th:each="date, st : *{dateFormula}">
@@ -64,7 +64,10 @@
 				<td th:text="*{dateFormula[__${st.index}__].calculationResult}"></td>
 				<td
 					th:text="|*{dateFormula[__${st.index}__].yearModeration}/*{dateFormula[__${st.index}__].monthModeration}/*{dateFormula[__${st.index}__].dayModeration}|"></td>
-				<!-- <td th:text="${formula.dayModeration}"></td> -->
+				<td>
+				  <a th:href="@{/update/{id}(id=*{dateFormula[__${st.index}__].id})}" class="btn btn-primary">更新</a>
+				  <a th:href="@{/delete/{id}(id=*{dateFormula[__${st.index}__].id})}" class="btn btn-danger">削除</a>
+				</td>
 			</tr>
 		</table>
 	</div>

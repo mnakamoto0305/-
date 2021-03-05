@@ -10,7 +10,7 @@ import lombok.Data;
 @Data
 public class DateFormula {
 
-	private int id;
+	private Long id;
 
 	@NotBlank
 	private String dateId;

@@ -27,4 +27,22 @@ public class CrudService {
 		return crudMapper.registerFormula(dateFormula);
 	}
 
+	//計算式特定メソッド(更新・削除用)
+	@Transactional
+	public DateFormula identifyFormula(Long id) {
+		return crudMapper.identifyFormula(id);
+	}
+
+	//計算式更新用メソッド
+	@Transactional
+	public boolean updateFormula(DateFormula dateFormula) {
+		return crudMapper.updateFormula(dateFormula);
+	}
+
+	//計算式削除用メソッド
+	@Transactional
+	public boolean deleteFormula(Long id) {
+		return crudMapper.deleteFormula(id);
+	}
+
 }
