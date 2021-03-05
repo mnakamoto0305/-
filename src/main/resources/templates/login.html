@@ -16,17 +16,22 @@
 
 </head>
 
-<body>
+<body class="text-center">
   <div class="container">
     <h1>ログイン</h1>
-    <form th:action="/" th:method="post">
+    <form th:action="@{/login}" th:method="post" id="login">
+      <p th:if="${session['SPRING_SECURITY_LAST_EXCEPTION']} != null"
+            th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}"
+            class="text-danger">
+            ログインエラーメッセージ
+        </p>
       <label>ユーザーID</label>
-      <input type="text">
+      <input type="text" name="userId">
       <br><br>
       <label>パスワード</label>
-      <input type="password">
-      <button class="btn btn-primary" type="submit">ログイン</button>
+      <input type="password" name="password">
     </form>
+    <button class="btn btn-primary" type="submit" form="login">ログイン</button>
   </div>
 </body>
 
