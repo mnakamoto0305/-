@@ -5,13 +5,21 @@ header {
 	margin-bottom: 50px;
 }
 
-.title a{
+.home-link{
 	display: inline-block;
 	color: white;
 	position: absolute;
 	top: 25%;
 	left: 25px;
 	font-size: 32px;
+}
+
+.logout-link{
+  color: white;
+  font-size: 32px;
+  display: inline-block;
+  padding-top: 22.5px;
+  padding-right: 25px;
 }
 
 .title p{
