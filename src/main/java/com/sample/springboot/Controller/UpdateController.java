@@ -49,7 +49,7 @@ public class UpdateController {
 	public ModelAndView putUpdate(ModelAndView mav) {
 		DateFormula dateFormula = (DateFormula) session.getAttribute("updFormula");
 		crudService.updateFormula(dateFormula);
-		session.invalidate();
+		session.removeAttribute("updFormula");
 		return new ModelAndView("redirect:/");
 	}
 }

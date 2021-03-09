@@ -57,7 +57,7 @@ public class RegisterController {
 	public ModelAndView postRegister(ModelAndView mav) {
 		DateFormula dateFormula = (DateFormula) session.getAttribute("regFormula");
 		crudService.registerFormula(dateFormula);
-		session.invalidate();
+		session.removeAttribute("regFormula");
 		return new ModelAndView("redirect:/");
 	}
 
