@@ -14,6 +14,12 @@ public class LoginController {
 		return mav;
 	}
 
+	@GetMapping("/error/session")
+	public ModelAndView getSessionError(ModelAndView mav) {
+		mav.setViewName("invalidSession");
+		return mav;
+	}
+
 	@PostMapping("/login")
     public ModelAndView postLogin(ModelAndView mav) {
 
