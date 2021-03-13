@@ -27,7 +27,7 @@
 
   <div class="container">
     <h1>こちらの内容で登録してよろしいですか？</h1>
-    <form th:action="@{/register}" method="post" id="registerConfirm" th:object="${dateFormula}">
+    <form th:action="@{/register}" th:method="post" id="registerConfirm" th:object="${dateFormula}">
       <input type="hidden" th:text="*{id}">
 	    <table class="table">
 	      <tr>

@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.sample.springboot.Service.DatabaseUserDetailsService;
 
@@ -33,13 +34,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+
+		//直リンクの禁止&ログイン不要ページの設定
 		http
 			.authorizeRequests()
 				.antMatchers("/webjars/**").permitAll()
 				.antMatchers("/css/**").permitAll()
-				.antMatchers("/login").permitAll()
-				.anyRequest().authenticated();
+				.antMatchers("/login").permitAll()//アクセス許可
+				.antMatchers("/login/session").permitAll()//セッションエラー
+				.anyRequest().authenticated();//それ以外は直リンク禁止
 
+		//httpsにリダイレクト
+		http
+			.requiresChannel()
+			.antMatchers("/login*").requiresSecure();
+
+		//ログイン処理
 		http
 			.formLogin()
 				.loginProcessingUrl("/login")
@@ -48,6 +58,31 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.usernameParameter("userId")
 				.passwordParameter("password")
 				.defaultSuccessUrl("/", true);
+
+		//ログアウト処理
+		http
+			.logout()
+				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+				.logoutUrl("/logout")
+				.logoutSuccessUrl("/login")
+				.deleteCookies("JSESSIONID");
+
+		//レスポンスヘッダーの設定
+//		http
+//			.headers()
+//			.contentSecurityPolicy("default-src 'self");
+
+		//セッション管理
+		http.sessionManagement()
+			.invalidSessionUrl("/error/session");//セッションエラーの遷移先
+
+		//Remember Me設定
+		http.rememberMe()
+			.key("uniqueKeyAndSecret")//トークン識別のキー
+			.rememberMeParameter("remember-me")//checkboxのname属性
+			.rememberMeCookieName("remember-me")//Cookie名
+			.tokenValiditySeconds(86400)//有効期限(秒数指定)
+			.useSecureCookie(true);//HTTPS接続のみ使用可能
 
 		//CSRF対策を無効に設定
 		http.csrf().disable();

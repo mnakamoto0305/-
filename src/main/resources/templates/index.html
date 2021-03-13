@@ -20,7 +20,10 @@
 
 <header>
 	<div class="title">
-		<a th:href="@{'/'}">日付計算アプリ</a>
+			<a th:href="@{'/'}" class="home-link">日付計算アプリ</a>
+		<div class="text-right">
+			<a th:href="@{'/logout'}" class="logout-link">ログアウト</a>
+		</div>
 	</div>
 </header>
 
@@ -41,7 +44,7 @@
 					</div>
 				</div>
 			</form>
-		  <button type="submit" class="btn btn-primary" form="referenceDate">計算実行</button>
+			<button type="submit" class="btn btn-primary" form="referenceDate">計算実行</button>
 			<a th:href="@{'/register'}" class="btn btn-primary">新規登録</a>
 		</div>
 	</div>
@@ -64,10 +67,11 @@
 				<td th:text="*{dateFormula[__${st.index}__].calculationResult}"></td>
 				<td
 					th:text="|*{dateFormula[__${st.index}__].yearModeration}/*{dateFormula[__${st.index}__].monthModeration}/*{dateFormula[__${st.index}__].dayModeration}|"></td>
-				<td>
-				  <a th:href="@{/update/{id}(id=*{dateFormula[__${st.index}__].id})}" class="btn btn-primary">更新</a>
-				  <a th:href="@{/delete/{id}(id=*{dateFormula[__${st.index}__].id})}" class="btn btn-danger">削除</a>
-				</td>
+				<td><a
+					th:href="@{/update/{id}(id=*{dateFormula[__${st.index}__].id})}"
+					class="btn btn-primary">更新</a> <a
+					th:href="@{/delete/{id}(id=*{dateFormula[__${st.index}__].id})}"
+					class="btn btn-danger">削除</a></td>
 			</tr>
 		</table>
 	</div>
